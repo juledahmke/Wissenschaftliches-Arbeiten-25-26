@@ -56,4 +56,45 @@ Klassen <- factor(Titanic_1$Pclass,
                            levels = c(3, 2, 1))
 Titanic_1$Pclass <- ordered(Klassen)
 # Klassen nach ihrer symbolischen Ordnung geordnet.
+
 # Höhere Klassen repräsentieren einen höheren Status.
+
+###############################################################################
+
+age_by_title <- tapply(Titanic_1$Age, Titanic_1$Title, median, na.rm = TRUE)
+# Alter je Anrede mithilfe des Medians berechnen (ohne NAs)
+
+Titanic_1$Age <- mapply(function(age, title) {
+  if (is.na(age)) {
+    return(age_by_title[title])
+  } else {
+    return(age)
+  }
+} , Titanic_1$Age, Titanic_1$Title)
+# NA werte ersetzen 
+
+###############################################################################
+
+cabin_number <- as.numeric(gsub("[^0-9]" , "" , Titanic_1$Cabin))
+# Zahl aus Cabin ectrahieren 
+
+Titanic_1$Side <- ifelse(is.na(cabin_number),
+                         NA,
+                         ifelse(cabin_number %% 2 == 1, 
+                                "Steuerbord" ,
+                                "Backbord"))
+Titanic_1$Side <- factor(Titanic_1$Side)
+#Backbord/Steuerbord bestimmen
+
+
+Titanic_1$Deck <- substr(Titanic_1$Cabin, 1,1)
+#Deck aus Cabin extrahieren (jeweils der erste Buchstabe)
+
+Titanic_1$Deck[Titanic_1$Deck == "" | Titanic_1$Deck == " "] <- NA
+#Leere/unbekannte Kabinen auf NA setzen
+
+###############################################################################
+
+Titanic_1 <- Titanic_1[, !(names(Titanic_1) %in%
+                         c("PassengerId" , "Name" , "Ticket" , "Cabin"))]
+#Variablen die entfernt werden sollen entfernen
