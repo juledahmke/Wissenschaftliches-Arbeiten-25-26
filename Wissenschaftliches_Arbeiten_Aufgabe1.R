@@ -22,33 +22,32 @@ Titanic_1$Title[Titanic_1$Title == "Mme"] <- "Mrs"
 Titanic_1$Title[!Titanic_1$Title %in% c("Mr", "Mrs", "Miss", "Master")] <- "Other"
 # Andere Titel als "Mr", "Mrs", "Miss" und "Master" werden zu "Other" umbennant.
 
-Titanic_1$Title
+table(Titanic_1$Title)
 
 ###############################################################################
 
 Titanic_1$Survived <- factor(Titanic_1$Survived, 
                              levels = c(0, 1),
                              labels = c("Nein", "Ja"))
-Titanic_1$Survived 
+table(Titanic_1$Survived) 
 # Ändert Variable zu factor mit "0"="Nein" und "1"="Ja"
 
 Titanic_1$Sex <- factor(Titanic_1$Sex, 
                         levels = c("male", "female"), 
                         labels = c("Mann", "Frau"))
-Titanic_1$Sex 
+table(Titanic_1$Sex)
 # Ändert Variable zu factor mit "male"="Mann" und "female"="Frau"
 
 Titanic_1$Embarked <- factor(Titanic_1$Embarked, 
                              levels = c("C", "Q", "S"),
                              labels = c("Cherbourg", "Queenstown", "Southampton"))
-Titanic_1$Embarked 
+table(Titanic_1$Embarked)
 # Ändert Variable zu factor mit "C"="Cherbourg", "Q"="Queenstown" und 
 # "S"="Southampton"
-# Umgang mit NAs?
 
-table(Titanic_1$Embarked)
-table(Titanic_1$Sex)
-table(Titanic_1$Survived)
+# Umgang mit NAs?
+sum(is.na(Titanic_1$Embarked))
+# 2 
 
 ###############################################################################
 
@@ -56,7 +55,6 @@ Klassen <- factor(Titanic_1$Pclass,
                            levels = c(3, 2, 1))
 Titanic_1$Pclass <- ordered(Klassen)
 # Klassen nach ihrer symbolischen Ordnung geordnet.
-
 # Höhere Klassen repräsentieren einen höheren Status.
 
 ###############################################################################
@@ -98,3 +96,4 @@ Titanic_1$Deck[Titanic_1$Deck == "" | Titanic_1$Deck == " "] <- NA
 Titanic_1 <- Titanic_1[, !(names(Titanic_1) %in%
                          c("PassengerId" , "Name" , "Ticket" , "Cabin"))]
 #Variablen die entfernt werden sollen entfernen
+
