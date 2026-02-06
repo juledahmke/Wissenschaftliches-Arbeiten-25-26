@@ -113,26 +113,21 @@ Kontigenztafel <- function(x, y){
 ## v)
 ## Erstellung einer Funktion zur Visualisierung von drei kategoriellen Variablen
 
-plot_mosaic_cat <- function(data, variab) {
-  if (length(variab) < 3 || length(variab) > 4) {
-    stop("Es dürfen nur 3 oder 4 Variablen sein.")
+mosaic_kat <- function(data, variab) {
+  if(length(variab) < 3 || length(variab) > 4) {
+    stop("Es dürfen nur 3 oder 4 Variablen sein")
   }
   
-  if (!all(variab %in% names(data))) {
-    stop("Mindestens eine Variable existiert nicht im Datensatz.")
+  if(!all(variab %in% names(data))) {
+    stop("Mindestens eine Variable existiert nicht im Datensatz")
   }
   
-  # Variablen extrahieren und als Faktoren speichern
-  data_var <- data[vars]
-  for (i in data[variab]) {
-    data_var[[i]] <- as.factor(data_var[[i]])
+  if(!all(sapply(data[variab], is.factor))) {
+    stop("Variablen müssen nominal oder ordinal skaliert sein")
   }
-  
-  # Kontingenztafel erzeugen
-  tab <- table(data_var)
-  
+
   # Mosaicplot
-  mosaicplot(tab,
+  mosaicplot(table(data[vars]),
              main = paste("Mosaicplot:", paste(vars, collapse = " × ")),
              color = TRUE, las = 1)
 }
