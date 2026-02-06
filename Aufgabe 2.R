@@ -111,7 +111,8 @@ Kontigenztafel <- function(x, y){
 
 ## Samuel
 ## v)
-## Erstellung einer Funktion zur Visualisierung von drei kategoriellen Variablen
+## Erstellung einer Funktion zur Visualisierung von drei/vier 
+## kategoriellen Variablen
 
 mosaic_kat <- function(data, variab) {
   if(length(variab) < 3 || length(variab) > 4) {
