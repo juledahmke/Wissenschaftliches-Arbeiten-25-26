@@ -128,7 +128,7 @@ mosaic_kat <- function(data, variab) {
   }
 
   # Mosaicplot
-  mosaicplot(table(data[vars]),
-             main = paste("Mosaicplot:", paste(vars, collapse = " × ")),
+  mosaicplot(table(data[variab]),
+             main = paste("Mosaicplot:", paste(variab, collapse = " × ")),
              color = TRUE, las = 1)
 }
