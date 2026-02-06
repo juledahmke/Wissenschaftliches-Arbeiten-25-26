@@ -1,5 +1,6 @@
 
 # Aufgabe 1
+# Charlotte und Hanna
 
 install.packages('readr')
 library(readr) # Paket um csv Dateien einzulesen
@@ -7,6 +8,7 @@ Titanic_1 <- read_csv("C:\\Users\\Acer\\Downloads\\Uni\\Programmieren mit R\\tit
 # Einlesen der Datei titanic.csv über meinen Pfad, je nach Nutzer abändern/anpassen! 
 
 ###############################################################################
+# Hanna
 
 Titanic_1$Title <- sub(".*, ([^.]+)\\..*", "\\1", Titanic_1$Name)
 # Zieht aus Titanic_1$Name den Titel der Person heraus, welcher in eine neue
@@ -25,6 +27,7 @@ Titanic_1$Title[!Titanic_1$Title %in% c("Mr", "Mrs", "Miss", "Master")] <- "Othe
 table(Titanic_1$Title)
 
 ###############################################################################
+# Hanna
 
 Titanic_1$Survived <- factor(Titanic_1$Survived, 
                              levels = c(0, 1),
@@ -50,6 +53,7 @@ sum(is.na(Titanic_1$Embarked))
 # 2 
 
 ###############################################################################
+# Hanna
 
 Klassen <- factor(Titanic_1$Pclass,
                            levels = c(3, 2, 1))
@@ -58,6 +62,7 @@ Titanic_1$Pclass <- ordered(Klassen)
 # Höhere Klassen repräsentieren einen höheren Status.
 
 ###############################################################################
+# Charlotte
 
 age_by_title <- tapply(Titanic_1$Age, Titanic_1$Title, median, na.rm = TRUE)
 # Alter je Anrede mithilfe des Medians berechnen (ohne NAs)
@@ -72,6 +77,7 @@ Titanic_1$Age <- mapply(function(age, title) {
 # NA werte ersetzen 
 
 ###############################################################################
+# Charlotte 
 
 cabin_number <- as.numeric(gsub("[^0-9]" , "" , Titanic_1$Cabin))
 # Zahl aus Cabin ectrahieren 
@@ -92,8 +98,10 @@ Titanic_1$Deck[Titanic_1$Deck == "" | Titanic_1$Deck == " "] <- NA
 #Leere/unbekannte Kabinen auf NA setzen
 
 ###############################################################################
+# Charlotte
 
 Titanic_1 <- Titanic_1[, !(names(Titanic_1) %in%
                          c("PassengerId" , "Name" , "Ticket" , "Cabin"))]
 #Variablen die entfernt werden sollen entfernen
+
 
