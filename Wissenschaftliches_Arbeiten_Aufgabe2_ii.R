@@ -1,6 +1,6 @@
 
 ###############################################################################
-
+# Hanna 
 # ii.
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken für
 # kategoriale Variablen berechnet und ausgibt
@@ -52,5 +52,6 @@ Deck <- Titanic_1$Deck
 
 kategoriale_Variablen(Ueberlebt)
 # Ausgabe der Endergebnisse zur jeweiligen Variable (z.B."Überlebt")
+
 
 ################################################################################
