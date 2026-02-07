@@ -125,7 +125,7 @@ mosaic_kat <- function(data, variab) {
     stop("Mindestens eine Variable existiert nicht im Datensatz")
   }
   
-  if(!all(sapply(data[variab], is.factor))) {
+  if(!all(sapply(data[variab], function(x) is.factor(x) || is.character(x)))) {
     stop("Variablen müssen nominal oder ordinal skaliert sein")
   }
 
