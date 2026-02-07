@@ -38,6 +38,8 @@ Metrische_Variablen <- function(data, var) {
 
 # Hanna 
 # ii.
+# Eine Funktion, die verschiedene geeignete deskriptive Statistiken für
+# kategoriale Variablen berechnet und ausgibt
 
 kategoriale_Variablen <- function(x) {
   
@@ -108,4 +110,71 @@ Kontigenztafel <- function(x, y){
   Kontigenz <- addmargins(Tabelle)
   print(Kontigenz)}}
 }
+ ###################################################
+## Kimia
+## iv: Eine Funktion, die geeignete deskriptive bivariate Statistiken 
+##     für den Zusammenhang zwischen einer metrischen und einer dichotomen 
+##     Variablen berechnet und ausgibt
 
+analyze_metric_dichotomous <- function(metric_var, dichotomous_var, data) {
+  
+  # 1. Datenbereinigung: Zeilen mit NAs in den relevanten Variablen entfernen
+  # Dies stellt sicher, dass aggregate und boxplot korrekt funktionieren.
+  clean_data <- data[!is.na(data[[metric_var]]) & !is.na(data[[dichotomous_var]]), ]
+  
+  # 2. Berechnung der deskriptiven Statistiken pro Gruppe
+  # Erstellung einer Formel für dynamische Variablennamen
+  formula_str <- as.formula(paste(metric_var, "~", dichotomous_var))
+  
+  # Berechnung von Mittelwert, Standardabweichung und Median
+  stats <- aggregate(formula_str, 
+                     data = clean_data, 
+                     FUN = function(x) c(Mean = mean(x), SD = sd(x), Median = median(x)))
+  
+  # Umwandlung des Matrix-Ergebnisses in einen sauberen Dataframe
+  stats <- do.call(data.frame, stats)
+  
+  # Spaltennamen für die Ausgabe optimieren
+  colnames(stats) <- c(dichotomous_var, "Mean", "SD", "Median")
+  
+  # Ausgabe der Tabelle in der Konsole
+  print("Deskriptive Statistik pro Gruppe:")
+  print(stats)
+  
+  # 3. Visualisierung mittels Boxplot
+  # Ein Boxplot ist ideal, um die Verteilung einer metrischen Variable 
+  # über zwei Gruppen hinweg zu vergleichen.
+  boxplot(formula_str, 
+          data = clean_data,
+          main = paste("Vergleich von", metric_var, "nach", dichotomous_var),
+          xlab = dichotomous_var,
+          ylab = metric_var,
+          col = c("steelblue", "tomato"), # Farben für die Gruppen
+          pch = 19) # Ausreißer als ausgefüllte Punkte darstellen
+}
+
+#########################################################################
+
+## Samuel
+## v)
+## Erstellung einer Funktion zur Visualisierung von drei/vier 
+## kategoriellen Variablen
+
+mosaic_kat <- function(data, variab) {
+  if(length(variab) < 3 || length(variab) > 4) {
+    stop("Es dürfen nur 3 oder 4 Variablen sein")
+  }
+  
+  if(!all(variab %in% names(data))) {
+    stop("Mindestens eine Variable existiert nicht im Datensatz")
+  }
+  
+  if(!all(sapply(data[variab], function(x) is.factor(x) || is.character(x)))) {
+    stop("Variablen müssen nominal oder ordinal skaliert sein")
+  }
+
+  # Mosaicplot
+  mosaicplot(table(data[variab]),
+             main = paste("Mosaicplot:", paste(variab, collapse = " × ")),
+             color = TRUE, las = 1)
+}
