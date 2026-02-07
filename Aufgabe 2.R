@@ -38,6 +38,8 @@ Metrische_Variablen <- function(data, var) {
 
 # Hanna 
 # ii.
+# Eine Funktion, die verschiedene geeignete deskriptive Statistiken für
+# kategoriale Variablen berechnet und ausgibt
 
 kategoriale_Variablen <- function(x) {
   
