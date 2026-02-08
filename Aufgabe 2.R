@@ -3,14 +3,14 @@
 # Charlotte
 #i)
 
-Metrische_Variablen <- function(data, var) {
-  if(!var %in% names(data)) {
-    stop("Variable ecistiert nicht im Datensatz.")
+Metrische_Variablen <- function(data, variablen) {
+  if(!variablen %in% names(data)) {
+    stop("Variable existiert nicht im Datensatz.")
     
     #Existenz der Variable prüfen
     
   }
-  x <- data[[var]]
+  x <- data[[variablen]]
   
   if(!is.numeric(x)) {
     stop("Variable ist nicht metrisch.")
@@ -18,7 +18,7 @@ Metrische_Variablen <- function(data, var) {
     # Prüfen, ob metrisch
   }
   result <- data.frame(
-    Variable = var,
+    Variable = variablen,
     N = sum(!is.na(x)),
     Missing = sum(is.na(x)),
     Mean = mean(x, na.rm = TRUE),
@@ -27,8 +27,8 @@ Metrische_Variablen <- function(data, var) {
     Variance = var(x, na.rm = TRUE),
     Minimum = min(x, na.rm = TRUE),
     Maximum = max(x, na.rm = TRUE),
-    Q1 = quantile(x, 0.25, na.rm = TRUE),
-    Q3 = quantile(x, 0.75, na.rm = TRUE),
+    Q25 = as.numeric(quantile(x, 0.25, na.rm = TRUE)),
+    Q75 = as.numeric(quantile(x, 0.75, na.rm = TRUE)),
     Range = max(x, na.rm = TRUE) - min(x, na.rm = TRUE)
   )
   return(result)
@@ -77,16 +77,16 @@ kategoriale_Variablen <- function(x) {
   # Gibt die Ergebnisse in einer Liste zurück.
 }
 
-Ueberlebt <- Titanic_1$Survived
-Klassen <- Titanic_1$Pclass
-Geschlecht <- Titanic_1$Sex
-Hafen <- Titanic_1$Embarked
-Titel <- Titanic_1$Title
-Schiffsseite <- Titanic_1$Side
-Deck <- Titanic_1$Deck
+#Ueberlebt <- Titanic_1$Survived
+#Klassen <- Titanic_1$Pclass
+#Geschlecht <- Titanic_1$Sex
+#Hafen <- Titanic_1$Embarked
+#Titel <- Titanic_1$Title
+#Schiffsseite <- Titanic_1$Side
+#Deck <- Titanic_1$Deck
 # Neue Zuordnung der kategorialen Variablen, für einfachere Nutzung der Funktion.
 
-kategoriale_Variablen(Ueberlebt)
+#kategoriale_Variablen(Ueberlebt)
 # Ausgabe der Endergebnisse zur jeweiligen Variable (z.B."Überlebt")
 
 # Jule
