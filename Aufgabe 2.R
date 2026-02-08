@@ -94,6 +94,9 @@ kategoriale_Variablen(Ueberlebt)
 # Deskriptive bivariate Statistiken für den Zusammenhang 
 # zwischen zwei kategorialen Variablen
 
+
+# Nutzung der Hilsfunktion aus Skript 2 um Skalenniveau zu bestimmen,
+# um zu überprüfen, welche Verwendung der Funktionen sinnvoll ist
 # Erstellung einer Kontigenztafel
 
 Kontigenztafel <- function(x, y){
@@ -110,7 +113,14 @@ Kontigenztafel <- function(x, y){
   Kontigenz <- addmargins(Tabelle)
   print(Kontigenz)}}
 }
- ###################################################
+
+#Berechnung der Korrelation für zwei ordinal skalierte Merkmale
+Korrelation <- function(x, y){if(!is.ordered(x) | !is.ordered(y))
+  return("x und y müssen ordinal skaliert sein")
+  else{cor(as.numeric(x), as.numeric(y) , use = "complete.obs", method = "spearman")}
+} 
+
+###################################################
 ## Kimia
 ## iv: Eine Funktion, die geeignete deskriptive bivariate Statistiken 
 ##     für den Zusammenhang zwischen einer metrischen und einer dichotomen 
