@@ -1,0 +1,126 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- Pakete ---
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[parfill]{parskip}
+
+% --- Layout Einstellungen ---
+\geometry{margin=2.5cm}
+
+\title{\textbf{Wissenschaftlicher Bericht: Analyse des Titanic-Datensatzes}}
+\author{
+  Kimia Safaei \and 
+  Jule Dahmke \and 
+  Hanna Engnath \and 
+  Samuel Kharistafri \and 
+  Charlotte Scholz
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Einleitung}
+In diesem Bericht wird der bereinigte Titanic-Datensatz mithilfe von verschiedenen R-Funktionen analysiert. Ziel ist es, deskriptive Statistiken zu erstellen und Zusammenhänge zwischen den Variablen, insbesondere in Bezug auf die Überlebensrate, zu untersuchen.
+
+\section{Deskriptive Statistik}
+
+\subsection{Analyse der metrischen Variablen}
+Die Auswertung der Variablen \texttt{Age} und \texttt{Fare} zeigt eine diverse Passagierstruktur. Während das Alter mit einem Mittelwert von 29,39 Jahren relativ symmetrisch verteilt ist, weist der Ticketpreis (\texttt{Fare}) eine starke Rechtsschiefe auf (Median: 14,45 vs. Mittelwert: 32,20). Dies deutet auf extreme Ausreißer im Bereich der Luxusklassen hin.
+
+\subsection{Analyse der kategorialen Variablen}
+Die Verteilung der kategorialen Merkmale verdeutlicht die Zusammensetzung an Bord:
+\begin{itemize}
+    \item \textbf{Geschlecht:} Dominanz männlicher Passagiere (64,76\,\%).
+    \item \textbf{Zustiegshafen:} Die Mehrheit (72,28\,\%) stieg in Southampton zu.
+    \item \textbf{Überlebensstatus:} Die Sterberate liegt bei 61,62\,\%, was die Schwere der Katastrophe unterstreicht.
+\end{itemize}
+
+\section{Bivariate Statistik: Zusammenhänge}
+
+\subsection{Überlebensrate nach Geschlecht und Klasse}
+Die folgende Tabelle zeigt die Verteilung der Überlebenden nach Geschlecht. Es wird deutlich, dass Frauen eine signifikant höhere Überlebenschance hatten.
+
+\begin{table}[H]
+\centering
+\caption{Kontigenztafel: Überlebensstatus nach Geschlecht}
+\label{tab:survived_sex}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Überlebt} & \textbf{Mann} & \textbf{Frau} & \textbf{Summe} \\
+\midrule
+Nein & 468 & 81 & 549 \\
+Ja & 109 & 233 & 342 \\
+\midrule
+\textbf{Summe} & 577 & 314 & 891 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+\subsection{Zusammenhang zwischen Passagierklasse und Überleben}
+Neben dem Geschlecht spielte die Klasse eine zentrale Rolle. In der dritten Klasse verstarben ca. 75\,\% der Passagiere.
+
+\begin{table}[H]
+\centering
+\caption{Kontigenztafel: Überlebensstatus nach Passagierklasse}
+\label{tab:survived_pclass}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Überlebt} & \textbf{Klasse 1} & \textbf{Klasse 2} & \textbf{Klasse 3} & \textbf{Summe} \\
+\midrule
+Nein & 80 & 97 & 372 & 549 \\
+Ja & 136 & 87 & 119 & 342 \\
+\midrule
+\textbf{Summe} & 216 & 184 & 491 & 891 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Visuelle Analyse (Metrisch vs. Dichotom)}
+
+\subsection{Vergleich von SibSp und Fare nach Überlebensstatus}
+In diesem Abschnitt werden die metrischen Variablen in Abhängigkeit vom Überlebensstatus visualisiert.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{boxplot_sibsp.png}
+    \caption{Anzahl der Begleiter (SibSp) nach Überlebensstatus}
+    \label{fig:boxplot_sibsp}
+\end{figure}
+
+Der Boxplot für \texttt{SibSp} zeigt, dass die Anzahl der Begleiter keinen massiven Einfluss auf die Überlebenschance hatte, obwohl extreme Ausreißer in der Gruppe der Verstorbenen existieren.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{boxplot_fare.png}
+    \caption{Ticketpreise (Fare) nach Überlebensstatus}
+    \label{fig:boxplot_fare}
+\end{figure}
+
+Im Gegensatz dazu zeigt der Boxplot für \texttt{Fare}, dass Überlebende im Median deutlich teurere Tickets besaßen.
+
+\clearpage
+\section{Multivariate Analyse}
+Der Mosaicplot verdeutlicht das Zusammenspiel zwischen Klasse, Hafen und Geschlecht.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{mosaic_plot.png}
+    \caption{Mosaicplot: Pclass, Embarked und Sex}
+    \label{fig:mosaic}
+\end{figure}
+
+\section{Fazit}
+Die Analyse bestätigt, dass die Überlebenschance auf der Titanic stark von sozioökonomischen Faktoren und dem Geschlecht abhing. Wohlhabendere Passagiere und Frauen wurden bei der Rettung signifikant bevorzugt.
+
+\end{document}
