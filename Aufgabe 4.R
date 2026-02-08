@@ -25,4 +25,4 @@ Kontigenztafel(Titanic_1$Survived, Titanic_1$Pclass)
 Kontigenztafel(Titanic_1$Sex, Titanic_1$Pclass)
 Kontigenztafel(Titanic_1$Pclass, Titanic_1$SibSp)
 
-Korrelation(Titanic_1$Fare, Titanic_1$Pclass)
+
