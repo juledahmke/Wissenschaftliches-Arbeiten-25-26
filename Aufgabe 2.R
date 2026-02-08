@@ -3,14 +3,14 @@
 # Charlotte
 #i)
 
-Metrische_Variablen <- function(data, var) {
-  if(!var %in% names(data)) {
-    stop("Variable ecistiert nicht im Datensatz.")
+Metrische_Variablen <- function(data, variablen) {
+  if(!variablen %in% names(data)) {
+    stop("Variable existiert nicht im Datensatz.")
     
     #Existenz der Variable prüfen
     
   }
-  x <- data[[var]]
+  x <- data[[variablen]]
   
   if(!is.numeric(x)) {
     stop("Variable ist nicht metrisch.")
@@ -18,7 +18,7 @@ Metrische_Variablen <- function(data, var) {
     # Prüfen, ob metrisch
   }
   result <- data.frame(
-    Variable = var,
+    Variable = variablen,
     N = sum(!is.na(x)),
     Missing = sum(is.na(x)),
     Mean = mean(x, na.rm = TRUE),
@@ -86,7 +86,7 @@ kategoriale_Variablen <- function(x) {
 #Deck <- Titanic_1$Deck
 # Neue Zuordnung der kategorialen Variablen, für einfachere Nutzung der Funktion.
 
-kategoriale_Variablen(Ueberlebt)
+#kategoriale_Variablen(Ueberlebt)
 # Ausgabe der Endergebnisse zur jeweiligen Variable (z.B."Überlebt")
 
 # Jule
