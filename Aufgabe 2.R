@@ -3,14 +3,14 @@
 # Charlotte
 #i)
 
-Metrische_Variablen <- function(data, var) {
-  if(!var %in% names(data)) {
-    stop("Variable ecistiert nicht im Datensatz.")
+Metrische_Variablen <- function(data, variablen) {
+  if(!variablen %in% names(data)) {
+    stop("Variable existiert nicht im Datensatz.")
     
     #Existenz der Variable prüfen
     
   }
-  x <- data[[var]]
+  x <- data[[variablen]]
   
   if(!is.numeric(x)) {
     stop("Variable ist nicht metrisch.")
@@ -18,7 +18,7 @@ Metrische_Variablen <- function(data, var) {
     # Prüfen, ob metrisch
   }
   result <- data.frame(
-    Variable = var,
+    Variable = variablen,
     N = sum(!is.na(x)),
     Missing = sum(is.na(x)),
     Mean = mean(x, na.rm = TRUE),
@@ -27,8 +27,8 @@ Metrische_Variablen <- function(data, var) {
     Variance = var(x, na.rm = TRUE),
     Minimum = min(x, na.rm = TRUE),
     Maximum = max(x, na.rm = TRUE),
-    Q1 = quantile(x, 0.25, na.rm = TRUE),
-    Q3 = quantile(x, 0.75, na.rm = TRUE),
+    Q25 = as.numeric(quantile(x, 0.25, na.rm = TRUE)),
+    Q75 = as.numeric(quantile(x, 0.75, na.rm = TRUE)),
     Range = max(x, na.rm = TRUE) - min(x, na.rm = TRUE)
   )
   return(result)
@@ -38,6 +38,8 @@ Metrische_Variablen <- function(data, var) {
 
 # Hanna 
 # ii.
+# Eine Funktion, die verschiedene geeignete deskriptive Statistiken für
+# kategoriale Variablen berechnet und ausgibt
 
 kategoriale_Variablen <- function(x) {
   
@@ -75,16 +77,16 @@ kategoriale_Variablen <- function(x) {
   # Gibt die Ergebnisse in einer Liste zurück.
 }
 
-Ueberlebt <- Titanic_1$Survived
-Klassen <- Titanic_1$Pclass
-Geschlecht <- Titanic_1$Sex
-Hafen <- Titanic_1$Embarked
-Titel <- Titanic_1$Title
-Schiffsseite <- Titanic_1$Side
-Deck <- Titanic_1$Deck
+#Ueberlebt <- Titanic_1$Survived
+#Klassen <- Titanic_1$Pclass
+#Geschlecht <- Titanic_1$Sex
+#Hafen <- Titanic_1$Embarked
+#Titel <- Titanic_1$Title
+#Schiffsseite <- Titanic_1$Side
+#Deck <- Titanic_1$Deck
 # Neue Zuordnung der kategorialen Variablen, für einfachere Nutzung der Funktion.
 
-kategoriale_Variablen(Ueberlebt)
+#kategoriale_Variablen(Ueberlebt)
 # Ausgabe der Endergebnisse zur jeweiligen Variable (z.B."Überlebt")
 
 # Jule
@@ -92,6 +94,9 @@ kategoriale_Variablen(Ueberlebt)
 # Deskriptive bivariate Statistiken für den Zusammenhang 
 # zwischen zwei kategorialen Variablen
 
+
+# Nutzung der Hilsfunktion aus Skript 2 um Skalenniveau zu bestimmen,
+# um zu überprüfen, welche Verwendung der Funktionen sinnvoll ist
 # Erstellung einer Kontigenztafel
 
 Kontigenztafel <- function(x, y){
@@ -108,6 +113,57 @@ Kontigenztafel <- function(x, y){
   Kontigenz <- addmargins(Tabelle)
   print(Kontigenz)}}
 }
+
+#Berechnung der Korrelation für zwei ordinal skalierte Merkmale
+Korrelation <- function(x, y){if(!is.ordered(x) | !is.ordered(y))
+  return("x und y müssen ordinal skaliert sein")
+  else{cor(as.numeric(x), as.numeric(y) , use = "complete.obs", method = "spearman")}
+} 
+
+###################################################
+## Kimia
+## iv: Eine Funktion, die geeignete deskriptive bivariate Statistiken 
+##     für den Zusammenhang zwischen einer metrischen und einer dichotomen 
+##     Variablen berechnet und ausgibt
+
+analyze_metric_dichotomous <- function(metric_var, dichotomous_var, data) {
+  
+  # 1. Datenbereinigung: Zeilen mit NAs in den relevanten Variablen entfernen
+  # Dies stellt sicher, dass aggregate und boxplot korrekt funktionieren.
+  clean_data <- data[!is.na(data[[metric_var]]) & !is.na(data[[dichotomous_var]]), ]
+  
+  # 2. Berechnung der deskriptiven Statistiken pro Gruppe
+  # Erstellung einer Formel für dynamische Variablennamen
+  formula_str <- as.formula(paste(metric_var, "~", dichotomous_var))
+  
+  # Berechnung von Mittelwert, Standardabweichung und Median
+  stats <- aggregate(formula_str, 
+                     data = clean_data, 
+                     FUN = function(x) c(Mean = mean(x), SD = sd(x), Median = median(x)))
+  
+  # Umwandlung des Matrix-Ergebnisses in einen sauberen Dataframe
+  stats <- do.call(data.frame, stats)
+  
+  # Spaltennamen für die Ausgabe optimieren
+  colnames(stats) <- c(dichotomous_var, "Mean", "SD", "Median")
+  
+  # Ausgabe der Tabelle in der Konsole
+  print("Deskriptive Statistik pro Gruppe:")
+  print(stats)
+  
+  # 3. Visualisierung mittels Boxplot
+  # Ein Boxplot ist ideal, um die Verteilung einer metrischen Variable 
+  # über zwei Gruppen hinweg zu vergleichen.
+  boxplot(formula_str, 
+          data = clean_data,
+          main = paste("Vergleich von", metric_var, "nach", dichotomous_var),
+          xlab = dichotomous_var,
+          ylab = metric_var,
+          col = c("steelblue", "tomato"), # Farben für die Gruppen
+          pch = 19) # Ausreißer als ausgefüllte Punkte darstellen
+}
+
+#########################################################################
 
 ## Samuel
 ## v)
