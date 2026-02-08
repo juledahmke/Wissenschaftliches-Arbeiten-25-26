@@ -25,4 +25,18 @@ Kontigenztafel(Titanic_1$Survived, Titanic_1$Pclass)
 Kontigenztafel(Titanic_1$Sex, Titanic_1$Pclass)
 Kontigenztafel(Titanic_1$Pclass, Titanic_1$SibSp)
 
+analyze_metric_dichotomous(metric_var = "SibSp", dichotomous_var = "Survived", 
+                           data = Titanic_1)
+## Der Unterschied beim Mittelwert zur Anzahl der Geschwister und Ehefrauen
+## ist zwischen Überlebt "Ja" und "Nein" nicht sehr groß. Die Standardabweichung 
+## ist bei denen die nicht überlebt haben um ca. 0.58 größer.
 
+analyze_metric_dichotomous(metric_var = "Fare", dichotomous_var = "Survived", 
+                           data = Titanic_1)
+## Der Mittelwert des Preises und die Standardabweichung ist bei den 
+## Überlebenden nahezu doppelt so groß.
+
+## Ein Mosaikplot zur Dastellung der Fahrklasse, dem Hafen und dem Geschlecht
+mosaic_kat(Titanic_1, c("Pclass", "Embarked", "Sex"))
+## Die Klasse ist unter den Geschlechtern immer relativ gleichverteilt
+## Die meisten sind aber insgesamt vom Hafen "Southampton"
