@@ -10,15 +10,15 @@ Sollte folgendermaßen vorgegangen werden:
 6. Durchlaufen lassen des Skripts Aufgabe 4 (Enthält die Auswertung des Titanic-Datensatzes)
 
 Variablennamen und Bedeutung:
--PassengerID: ID-Variable
--Survived: Überlebt Ja(1), Nein(0)
--Pclass: Klasse des Passagiers
--Name: Name des Passagiers
--Sex: Geschlecht
--Age: Alter beim Untergang der Titanic
--SibSp: Anzahl der Geschwister und Ehefrauen
--Parch: Anzahl an Eltern und Kindern an Bord
--Ticket: Ticketnummer
--Fare: Ticketpreis
--Cabin: Kabinennummer
--Embarked: Zustiegshafen (C=Cherbourg, Q=Queenstown, S=Southhampton)
+- PassengerID: ID-Variable 
+- Survived: Überlebt Ja(1), Nein(0)
+- Pclass: Klasse des Passagiers
+- Name: Name des Passagiers
+- Sex: Geschlecht
+- Age: Alter beim Untergang der Titanic
+- SibSp: Anzahl der Geschwister und Ehefrauen
+- Parch: Anzahl an Eltern und Kindern an Bord
+- Ticket: Ticketnummer
+- Fare: Ticketpreis
+- Cabin: Kabinennummer
+- Embarked: Zustiegshafen (C=Cherbourg, Q=Queenstown, S=Southhampton)
